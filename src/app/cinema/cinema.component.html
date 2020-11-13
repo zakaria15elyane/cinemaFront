@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">Ville
+           <ul *ngIf="villes" class="list-group">
+               <table>
+                   <tr *ngFor="let v of villes._embedded.villes" class="list-group-item" (click)="onGetCinema(v)">
+                       <td>{{v.name}}</td>
+                   </tr>
+               </table>
+               
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,19 +1,38 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <div class="container">
     <div class="row">
-        <div class="col-md-4">Ville
+        <div class="col-md-4">
            <ul *ngIf="villes" class="list-group">
-               <table>
-                   <tr *ngFor="let v of villes._embedded.villes" class="list-group-item" (click)="onGetCinema(v)">
+               <li [ngClass]="v==currentVille?'active':''" *ngFor="let v of villes._embedded.villes" class="list-group-item clickable"
+                    (click)="onGetCinemas(v)">
                        <td>{{v.name}}</td>
-                   </tr>
-               </table>
+                 
+                </li>
                
             </ul>
         </div>
         <div class="col-md-8">
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <div class="panel-heading">Liste des Cinémas</div>
+                <div class="panel-body"> 
+                    <ul *ngIf="cinemas" class="nav nav-pills">
+                        <li *ngFor="let c of cinemas._embedded.cinemas" class="clickable">
+                            <a (click)="onGetSalle(c)">{{c.name}}</a>
+                        </li>
+                    </ul>
 
+                <div class="row" *ngIf="salles">
+                    <div *ngFor="let s of salles._embedded.salles">
+                        <div class="col-md-12">
+                        <div class="panel panel-default ">
+                            <div class="panel-heading">{{s.name}}</div>
+                            <div class="panel-body" *ngIf="s.projections">
+                          <img src="{{cinemaService.host+'/imageFilm/'+s.projections._embedded.projection[0].film.id}}">
+                            </div>
+                        </div></div>
+                    </div>
                 </div>
             </div>
         </div>

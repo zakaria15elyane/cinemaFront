@@ -10,10 +10,11 @@ import { CinemaService } from '../cinema.service';
 })
 export class CinemaComponent implements OnInit {
 
- public villes;public cinema;
+ public villes;public cinemas;public salles:any;
+ public currentVille;public currentCinema;
  
 
-  constructor(private cinemaService:CinemaService, private titre: Title ) { }
+  constructor(public cinemaService:CinemaService, private titre: Title ) { }
   
   ngOnInit(): void {
    this.titre.setTitle("Page Index");
@@ -28,11 +29,31 @@ export class CinemaComponent implements OnInit {
     })
    
   }
-  onGetCinema(v){
+  onGetCinemas(v){
+    this.currentVille=v;
     this.cinemaService.getCinema(v)
     .subscribe(data=>{
-      this.cinema=data;
+      this.cinemas=data;
      console.log(data);
       
   })
-  }}
+  }
+  onGetSalle(c){
+    this.currentCinema=c;
+    this.cinemaService.getSalles(c)
+    .subscribe(data=>{
+      this.salles=data;
+      this.salles._embedded.salles.forEach(salle=>{
+        this.cinemaService.getProjections(salle)
+        .subscribe(data=>{
+         salle.projections=data;
+         console.log(data);
+     
+      })
+    
+    })  
+  })
+
+}
+}
+  

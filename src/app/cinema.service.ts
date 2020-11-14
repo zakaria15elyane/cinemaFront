@@ -7,14 +7,21 @@ import { MyInterface } from './MyInterface';
 })
 export class CinemaService {
 
-  public host:string="http://localhost:8080"
+  public host: string = "http://localhost:8080"
 
-  constructor(private http:HttpClient) { }
-  getVilles(){
-    return this.http.get<MyInterface>(this.host+"/villes");
+  constructor(private http: HttpClient) { }
+  getVilles() {
+    return this.http.get<MyInterface>(this.host + "/villes");
 
-}
-getCinema(v){
-  return this.http.get(v.links.cinema.href);
-}
+  }
+  getCinema(v) {
+    return this.http.get(v._links.cinema.href);
+  }
+  getSalles(c){
+    return this.http.get(c._links.salles.href);
+  }
+  getProjections(salle:any){
+    let url=salle._links.projections.href.replace("{?projection}","");
+    return this.http.get(url+"?projection=p1");
+  }
 }
